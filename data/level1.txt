@@ -1,0 +1,10 @@
+w=14
+h=7
+---
+SSSSSSSSSSSSSS
+S            S
+S            S
+S        S   S
+S            S
+S            S
+SSSSSSSSSSSSSS

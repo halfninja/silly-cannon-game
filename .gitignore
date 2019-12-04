@@ -1,0 +1,7 @@
+# IntelliJ bobbins
+.idea
+
+# Python gubbins
+/venv/
+__pycache
+*.pyc
