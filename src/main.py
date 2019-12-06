@@ -1,12 +1,16 @@
-import pygame
-from gummworld.gameclock import GameClock
-from locals import *
-from library.camera import Camera
-from library import imageloader
-from library.hue import Hue
-from cannon import Cannon
-from settings import *
+from __future__ import annotations
+from typing import *
 
+import pygame
+
+from cannon import Cannon
+from gummworld.gameclock import GameClock
+from library.camera import Camera
+from library.hue import Hue
+from library.manager import Manager
+from library.scene import Scene
+from locals import *
+from settings import *
 
 __author__: str = 'Nick'
 
@@ -14,42 +18,33 @@ __author__: str = 'Nick'
 def main():
     pygame.init()
 
-    hue = Hue(None)
-
     fire_hue = (255, 255, 0)
 
     gutter = 10
-    size = width, height = (400, 300)
+    width, height = (320, 240)
+    screen_width, screen_height = (width * 2, height * 2)
+    gui_width, gui_height = screen_width, screen_height
     speed = Vector2(2.0, 2.0)
     pos = Vector2(0.0, 0.0)
     run = True
-    fps_value = None
     camera = Camera()
 
     pygame.display.set_icon(pygame.image.load("data/intro_ball.gif"))
 
-    screen: Surface = pygame.display.set_mode(size)
+    screen: Surface = pygame.display.set_mode((width * 2, height * 2))
     canvas: Surface = pygame.Surface((width, height))
     pygame.display.set_caption("Cannons")
-    gui: UIManager = UIManager((width, height), 'data/themes/quick_theme.json')
-
-    font = pygame.font.SysFont(None, 36)
-
-    text_hellothere = font.render("Hello there", 1, text_color)
-    text_hellothere_pos = text_hellothere.get_rect()
-    # text_hellothere_pos.y = height - 10 - text_hellothere_pos.height
-    text_hellothere_pos.bottom = height - gutter
-    text_hellothere_pos.x = gutter
+    gui: UIManager = UIManager((gui_width, gui_height), 'data/themes/quick_theme.json')
 
     fire_rect = Rect((0, 0), (60, 40))
-    fire_rect.right = width - gutter
-    fire_rect.bottom = height - gutter*2 - 20
+    fire_rect.right = gui_width - gutter
+    fire_rect.bottom = gui_height - gutter*2 - 20
     fire_button = UIButton(relative_rect=fire_rect,
                             text='Fire',
                             manager=gui
                             )
     slider_x = UIHorizontalSlider(manager=gui,
-                                relative_rect=Rect((gutter, height - 20 - gutter), (width - gutter*2, 20)),
+                                relative_rect=Rect((gutter, gui_height - 20 - gutter), (gui_width - gutter*2, 20)),
                                 start_value=45,
                                 value_range=(100, 10)
                                 )
@@ -57,41 +52,32 @@ def main():
     camera.pos.x = -40
     camera.pos.y = -width // 2
 
-    cannon = Cannon()
+    scene = Scene()
+    scene.set_bg(bg_color)
 
-    with open('data/level1.txt', 'r') as level1:
-        data = level1.read().splitlines()
+    manager = Manager(scene)
+
+    cannon = Cannon()
+    scene.add(cannon)
+
+    hue = Hue(None)
+    scene.add_overlay(hue)
 
     def update_world(dt: float):
         nonlocal pos
         pos = pos + speed
 
-        cannon.update(dt)
-        camera.update(dt)
-        hue.update(dt)
+        scene.update(dt, manager)
+        camera.update(dt, manager)
 
         gui.update(dt)
 
     def render(interpolation: float):
-        canvas.fill(bg_color)
-        cannon.render(canvas, camera)
+        scene.render(canvas, camera)
 
-        screen.blit(canvas, screen.get_rect())
-
-        screen.fill((100, 100, 100), special_flags=pygame.BLEND_ADD)
-
-        current_hue = hue.current_hue()
-        if current_hue is not None:
-            screen.fill(current_hue, special_flags=pygame.BLEND_MULT)
-
-        canvas.blit(text_hellothere, text_hellothere_pos)
-
-        if fps_value is not None:
-            fps = font.render("%d" % fps_value, 1, text_color)
-            screen.blit(fps, Rect((gutter, height - 100), (200, 200)))
+        pygame.transform.scale2x(canvas, screen)
 
         gui.draw_ui(screen)
-
         pygame.display.update()
 
     def pause_world():
@@ -126,6 +112,7 @@ def main():
             elif event.type == USEREVENT:
                 if event.user_type == 'ui_button_pressed':
                     if event.ui_element == fire_button:
+                        cannon.fire(manager)
                         camera.jitter_amount = 5.0
                         hue.set_hue(fire_hue, 0.1)
 

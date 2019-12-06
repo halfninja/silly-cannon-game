@@ -1,10 +1,12 @@
-from locals import *
-from library.camera import Camera
+from __future__ import annotations
+from library import Renderable
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from library import Manager
 
-class Entity:
-    def __init__(self, rect: Rect):
-        self.rect = rect
 
-    def update(self, dt: float): pass
+class Entity(Renderable):
+    def __init__(self):
+        self.dead = False
 
-    def render(self, canvas: Surface, camera: Camera): pass
+    def update(self, dt: float, manager: Manager): pass

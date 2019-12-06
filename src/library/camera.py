@@ -1,6 +1,10 @@
 import random
+
 from locals import *
 from typing import *
+if TYPE_CHECKING:
+    from library.manager import Manager
+
 
 class Camera:
 
@@ -16,7 +20,7 @@ class Camera:
     @property
     def y(self) -> float: return self.pos.y + self.jitter.y
 
-    def update(self, dt: float):
+    def update(self, dt: float, manager: 'Manager'):
         if self.jitter_amount == 0.0:
             self.jitter.x = 0.0
             self.jitter.y = 0.0
