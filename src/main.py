@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+import sys
 from typing import *
 
 import pygame
@@ -9,20 +11,27 @@ from library.camera import Camera
 from library.hue import Hue
 from library.manager import Manager
 from library.scene import Scene
+from library import windows
 from locals import *
 from settings import *
 
 __author__: str = 'Nick'
 
 
+ScaleFactor = NewType("ScaleFactor", Literal[2, 3, 4, 5])
+
 def main():
+    windows.enable_hidpi_support()
+
     pygame.init()
+
+    scale_factor: Literal[2, 3, 4, 5] = 3
 
     fire_hue = (255, 255, 0)
 
     gutter = 10
     width, height = (320, 240)
-    screen_width, screen_height = (width * 2, height * 2)
+    screen_size = screen_width, screen_height = (width * scale_factor, height * scale_factor)
     gui_width, gui_height = screen_width, screen_height
     speed = Vector2(2.0, 2.0)
     pos = Vector2(0.0, 0.0)
@@ -31,7 +40,7 @@ def main():
 
     pygame.display.set_icon(pygame.image.load("data/intro_ball.gif"))
 
-    screen: Surface = pygame.display.set_mode((width * 2, height * 2))
+    screen: Surface = pygame.display.set_mode((screen_width, screen_height))
     canvas: Surface = pygame.Surface((width, height))
     pygame.display.set_caption("Cannons")
     gui: UIManager = UIManager((gui_width, gui_height), 'data/themes/quick_theme.json')
@@ -75,7 +84,10 @@ def main():
     def render(interpolation: float):
         scene.render(canvas, camera)
 
-        pygame.transform.scale2x(canvas, screen)
+        if scale_factor == 2:
+            pygame.transform.scale2x(canvas, screen)
+        else:
+            pygame.transform.scale(canvas, screen_size, screen)
 
         gui.draw_ui(screen)
         pygame.display.update()
