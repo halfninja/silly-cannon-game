@@ -2,13 +2,13 @@ from __future__ import annotations
 from typing import *
 from pygame import *
 from itertools import chain
-from library import Renderable
+from src.library import Renderable
 if TYPE_CHECKING:
-    from library import Manager, Camera
+    from src.library import Manager, Camera
 
 if TYPE_CHECKING:
     from pygame import Surface
-    from library import Entity
+    from src.library import Entity
 
 
 def is_live(entity: Entity):
@@ -46,4 +46,3 @@ class Scene(Renderable):
 
     def set_bg(self, bg_color):
         self.bg_color = bg_color
-

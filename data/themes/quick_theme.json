@@ -1,12 +1,41 @@
 {
     "button":
     {
+        "colours":
+        {   "normal_bg": "#F0F0F0,#E0E0E0,270",
+            "hovered_bg": "#FFFFFF,#EFEFEF,270",
+            "normal_border":"#000000",
+            "hovered_border":"#808080",
+            "normal_text": "#000000",
+            "hovered_text": "#000000",
+            "active_bg": "#FFFF0000",
+            "active_border":"#FFA050"
+        },
         "misc":
         {
             "shape": "rounded_rectangle",
             "shape_corner_radius": "10",
             "border_width": "1",
             "shadow_width": "2"
+        }
+    },
+    "horizontal_slider":
+    {
+        "colours":
+        {
+            "dark_bg": "#FFFFFF00"
+        }
+    },
+    "horizontal_slider.button":
+    {
+        "colours":
+        {
+            "normal_text": "#FFFFFF",
+            "normal_bg": "#000000",
+            "hovered_bg": "#303030",
+            "active_bg": "#404040",
+            "selected_bg": "#000000",
+            "active_border":"#808080"
         }
     }
 }

@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from library.scene import Scene
+    from src.library.scene import Scene
 
 
 class Manager:

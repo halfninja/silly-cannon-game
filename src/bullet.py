@@ -1,13 +1,13 @@
 import pygame
 import math
 
-from library import Manager
-from locals import *
-from settings import *
-from library.camera import Camera
-from library.entity import Entity
-from library.transforms import *
-from library.imageloader import get_image
+from src.library import Manager
+from src.locals import *
+from src.settings import *
+from src.library.camera import Camera
+from src.library.entity import Entity
+from src.library.transforms import *
+from src.library.imageloader import get_image
 
 
 class Bullet(Entity):

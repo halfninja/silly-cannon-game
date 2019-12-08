@@ -1,8 +1,8 @@
 from __future__ import annotations
-from library import Renderable
+from src.library import Renderable
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from library import Manager
+    from src.library import Manager
 
 
 class Entity(Renderable):

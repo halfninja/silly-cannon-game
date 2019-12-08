@@ -4,6 +4,7 @@ from typing import *
 
 Point = Tuple[float, float]
 
+
 # Maths from https://stackoverflow.com/a/54714144/21399
 def blit_rotate(
         surf: Surface,

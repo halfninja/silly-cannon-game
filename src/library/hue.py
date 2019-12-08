@@ -2,10 +2,10 @@ from typing import *
 
 from pygame.surface import Surface
 
-from library import Camera, Entity
-from library.types import *
+from src.library import Camera, Entity
+from src.library.types import *
 if TYPE_CHECKING:
-    from library.manager import Manager
+    from src.library.manager import Manager
 
 
 class Hue(Entity):
@@ -27,6 +27,7 @@ class Hue(Entity):
         Update timers to expire any temporary hue.
 
         :param dt: time passed in seconds.
+        :param manager: the manager.
         """
         if self.timer > 0.0:
             self.timer -= dt
