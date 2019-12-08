@@ -1,8 +1,12 @@
 # IntelliJ bobbins
-.idea
+.idea/
 
 # Python gubbins
 /venv/
 __pycache
 *.pyc
 .mypy_cache
+
+# Dist folders
+/build/
+/dist/
