@@ -1,5 +1,6 @@
 import sys
 
+
 def enable_hidpi_support():
     # Try to tell Windows we're HiDPI aware, to disable scaling
     if sys.platform == 'win32':

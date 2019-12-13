@@ -27,6 +27,7 @@ class Hue(Entity):
         Update timers to expire any temporary hue.
 
         :param dt: time passed in seconds.
+        :param manager: the manager.
         """
         if self.timer > 0.0:
             self.timer -= dt

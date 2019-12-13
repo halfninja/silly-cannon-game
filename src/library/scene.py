@@ -46,4 +46,3 @@ class Scene(Renderable):
 
     def set_bg(self, bg_color):
         self.bg_color = bg_color
-
