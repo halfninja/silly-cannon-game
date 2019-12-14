@@ -8,5 +8,6 @@ if TYPE_CHECKING:
 class Entity(Renderable):
     def __init__(self):
         self.dead = False
+        self.name = None
 
     def update(self, dt: float, manager: Manager): pass

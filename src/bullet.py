@@ -2,6 +2,7 @@ import pygame
 import math
 
 from library import Manager
+from library.particles import Particles
 from locals import *
 from settings import *
 from library.camera import Camera
@@ -21,9 +22,11 @@ class Bullet(Entity):
 
     def update(self, dt: float, manager: Manager):
         self.pos += self.velocity * dt
-        self.velocity.y += manager.scene.gravity
+        self.velocity.y += manager.scene.gravity * dt
         self.rect.center = self.pos
         if self.pos.y > 0:
+            bullet_particles: Particles = manager.scene.find_by_name("bullet_particles")
+            bullet_particles.semicircle_explosion(self.pos.x, self.pos.y, 100.0, 100)
             self.dead = True
 
     def render(self, canvas: Surface, camera: Camera):

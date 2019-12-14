@@ -10,6 +10,7 @@ from gummworld import GameClock
 from library.camera import Camera
 from library.hue import Hue
 from library.manager import Manager
+from library.particles import Particles
 from library.scene import Scene
 from library import windows
 from locals import *
@@ -68,6 +69,10 @@ def main():
 
     cannon = Cannon()
     scene.add(cannon)
+
+    bullet_particles = Particles()
+    bullet_particles.name = 'bullet_particles'
+    scene.add(bullet_particles)
 
     hue = Hue(None)
     scene.add_overlay(hue)

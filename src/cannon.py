@@ -15,16 +15,18 @@ class Cannon(Entity):
     def __init__(self):
         super().__init__()
         self.rect = Rect(0, 0, 25, 10)
+        self.rect.bottom = 0
         self.angle = 45
         self.barrel = Surface((20, 4), pygame.SRCALPHA)
         self.barrel.fill(sprite_color)
         self.shadow = get_image("data/ground_shadow_large.png")
         self.shadow_rect: Rect = self.shadow.get_rect()
         self.shadow_rect.midtop = self.rect.midbottom
+        self.bullet_speed = 150
 
     def fire(self, manager: Manager):
         bullet_pos = Vector2(self.rect.midtop) + Vector2(20, 0).rotate(-self.angle)
-        bullet = Bullet(bullet_pos, self.angle, 100)
+        bullet = Bullet(bullet_pos, self.angle, self.bullet_speed)
         manager.scene.add(bullet)
 
     def angle_radians(self) -> float:
