@@ -25,9 +25,11 @@ class Particles(Entity):
         self.color = (0, 0, 0)
         self.width = 1
         self.gravity_enabled = True
+        self.time_accumulator = 0.0
 
     def update(self, dt: float, manager: Manager):
         g = None
+        self.time_accumulator += dt
         if self.gravity_enabled:
             g = manager.scene.gravity
         for p in self._p:
@@ -47,7 +49,13 @@ class Particles(Entity):
                             p.x = None
                 else:
                     p.x = None
-        # TODO clear up or reuse dead particles
+        # Clean up dead particles every second
+        if self.time_accumulator >= 1.0:
+            self.time_accumulator = 0.0
+            size = len(self._p)
+            if size > 0:
+                self._p = [p for p in self._p if p.x is not None]
+
 
     def add(self, x: float, y: float, vx: float, vy: float, life: float = 60.0):
         self._p.append(P(x, y, vx, vy, life))

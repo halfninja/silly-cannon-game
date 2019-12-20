@@ -81,6 +81,8 @@ def main():
         nonlocal pos
         pos = pos + speed
 
+        cannon.angle = slider_x.get_current_value()
+
         scene.update(dt, manager)
         camera.update(dt, manager)
 
@@ -113,8 +115,6 @@ def main():
 
     while run:
         clock.tick()
-
-        cannon.angle = slider_x.get_current_value()
 
         for event in pygame.event.get():
             if event.type == QUIT:
